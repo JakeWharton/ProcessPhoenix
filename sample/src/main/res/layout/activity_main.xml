@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity"
+    >
+
+  <TextView
+      android:id="@+id/process_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="Process ID: 12345"
+      style="?android:attr/textAppearanceLarge"
+      />
+
+  <TextView
+      android:id="@+id/extra_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      tools:text="Extra Text: null"
+      style="?android:attr/textAppearanceSmall"
+      />
+
+  <Button
+      android:id="@+id/restart"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:text="Restart Process"
+      />
+
+  <Button
+      android:id="@+id/restart_with_intent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="Restart Process with Intent"
+      />
+
+</LinearLayout>

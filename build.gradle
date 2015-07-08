@@ -1,0 +1,24 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:1.2.3'
+  }
+}
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+}
+
+ext {
+  minSdkVersion = 15
+  compileSdkVersion = 22
+  buildToolsVersion = '22.0.1'
+
+  ci = 'true'.equals(System.getenv('CI'))
+
+  butterKnife = 'com.jakewharton:butterknife:7.0.0'
+}
