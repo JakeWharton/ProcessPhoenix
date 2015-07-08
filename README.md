@@ -28,7 +28,7 @@ Download
 --------
 
 ```groovy
-compile 'com.jakewharton:process-phoenix:1.0.0-SNAPSHOT'
+compile 'com.jakewharton:process-phoenix:1.0.0'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
