@@ -59,7 +59,9 @@ public final class ProcessPhoenix extends Activity {
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
     intent.putExtra(KEY_RESTART_INTENT, nextIntent);
     context.startActivity(intent);
-
+    if (context instanceof Activity) {
+      ((Activity) context).finish();
+    }
     Runtime.getRuntime().exit(0); // Kill kill kill!
   }
 
@@ -88,7 +90,7 @@ public final class ProcessPhoenix extends Activity {
 
     Intent intent = getIntent().getParcelableExtra(KEY_RESTART_INTENT);
     startActivity(intent);
-
+    finish();
     Runtime.getRuntime().exit(0); // Kill kill kill!
   }
 }
