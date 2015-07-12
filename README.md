@@ -14,7 +14,7 @@ Usage
 Add the ProcessPhoenix activity to your app's `AndroidManifest.xml`:
 
 ```xml
-<activity android:name="net.core.helper.ProcessPhoenix"/>
+<activity android:name="com.jakewharton.processphoenix.ProcessPhoenix"/>
 ```
 
 Start the default activity in a new process:
