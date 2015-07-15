@@ -1,10 +1,17 @@
 apply plugin: 'com.android.library'
 
+dependencies {
+  androidTestImplementation rootProject.ext.androidxTestRunner
+  androidTestImplementation rootProject.ext.androidxTestRules
+  androidTestImplementation rootProject.ext.androidxTestUiAutomator
+}
+
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
 
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
   compileOptions {
