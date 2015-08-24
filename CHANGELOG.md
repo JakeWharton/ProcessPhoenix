@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.0.2 *(2015-08-24)*
+----------------------------
+
+ * Minimum SDK version is now set to 4. Sorry Cupcake users!
+
+
 Version 1.0.1 *(2015-07-31)*
 ----------------------------
 
