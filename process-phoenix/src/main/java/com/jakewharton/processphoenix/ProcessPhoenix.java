@@ -89,7 +89,11 @@ public final class ProcessPhoenix extends Activity {
     super.onCreate(savedInstanceState);
 
     Intent intent = getIntent().getParcelableExtra(KEY_RESTART_INTENT);
-    startActivity(intent);
+
+    if (intent != null) {
+      startActivity(intent);
+    }
+
     finish();
     Runtime.getRuntime().exit(0); // Kill kill kill!
   }
