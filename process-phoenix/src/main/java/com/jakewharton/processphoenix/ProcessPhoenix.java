@@ -16,6 +16,7 @@
 package com.jakewharton.processphoenix;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -92,5 +93,23 @@ public final class ProcessPhoenix extends Activity {
     startActivity(intent);
     finish();
     Runtime.getRuntime().exit(0); // Kill kill kill!
+  }
+
+  /**
+   * Checks if the current process is a temporary Phoenix Process.
+   * This can be used to avoid initialisation of unused resources or to prevent running code that
+   * is not multi process ready.
+   *
+   * @return true if the current process is a temporary Phoenix Process
+   */
+  public static boolean isPhoenixProcess(Context context) {
+    int currentPid = android.os.Process.myPid();
+    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+      if (processInfo.pid == currentPid && processInfo.processName.endsWith(":phoenix")) {
+        return true;
+      }
+    }
+    return false;
   }
 }
