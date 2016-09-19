@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 1.1.0 *(2016-09-19)*
+----------------------------
+
+ * New: `isPhoenixProcess` method checks whether the current process belongs to the library. Use this
+   to skip any initialization you would otherwise do for a normal process.
+
+
 Version 1.0.2 *(2015-08-24)*
 ----------------------------
 
