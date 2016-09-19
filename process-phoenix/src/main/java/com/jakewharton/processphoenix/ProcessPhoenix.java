@@ -24,6 +24,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.os.Process;
 
 import static android.content.Intent.ACTION_MAIN;
 import static android.content.Intent.CATEGORY_DEFAULT;
@@ -98,12 +99,12 @@ public final class ProcessPhoenix extends Activity {
   /**
    * Checks if the current process is a temporary Phoenix Process.
    * This can be used to avoid initialisation of unused resources or to prevent running code that
-   * is not multi process ready.
+   * is not multi-process ready.
    *
    * @return true if the current process is a temporary Phoenix Process
    */
   public static boolean isPhoenixProcess(Context context) {
-    int currentPid = android.os.Process.myPid();
+    int currentPid = Process.myPid();
     ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
       if (processInfo.pid == currentPid && processInfo.processName.endsWith(":phoenix")) {
