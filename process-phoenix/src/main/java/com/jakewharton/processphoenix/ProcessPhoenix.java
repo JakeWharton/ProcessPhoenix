@@ -26,6 +26,8 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Process;
 
+import java.util.List;
+
 import static android.content.Intent.ACTION_MAIN;
 import static android.content.Intent.CATEGORY_DEFAULT;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -106,9 +108,12 @@ public final class ProcessPhoenix extends Activity {
   public static boolean isPhoenixProcess(Context context) {
     int currentPid = Process.myPid();
     ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-    for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
-      if (processInfo.pid == currentPid && processInfo.processName.endsWith(":phoenix")) {
-        return true;
+    List<ActivityManager.RunningAppProcessInfo> runningProcesses = manager.getRunningAppProcesses();
+    if (runningProcesses != null) {
+      for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+        if (processInfo.pid == currentPid && processInfo.processName.endsWith(":phoenix")) {
+          return true;
+        }
       }
     }
     return false;
