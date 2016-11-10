@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 1.1.1 *(2016-11-10)*
+----------------------------
+
+ * Fix: Avoid potential NPE inside `isPhoenixProcess` method due to Android returning an unexpected
+   `null` value.
+
+
 Version 1.1.0 *(2016-09-19)*
 ----------------------------
 

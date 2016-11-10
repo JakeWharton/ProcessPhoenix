@@ -1,5 +1,5 @@
 Process Phoenix
-=========================
+===============
 
 Process Phoenix facilitates restarting your application process.
 
@@ -22,13 +22,20 @@ Intent nextIntent = //...
 ProcessPhoenix.triggerRebirth(context, nextIntent);
 ```
 
+To check if your application is inside the Phoenix process to skip initialization in `onCreate`:
+```java
+if (ProcessPhoenix.isPhoenixProcess(this)) {
+  return;
+}
+```
+
 
 
 Download
 --------
 
 ```groovy
-compile 'com.jakewharton:process-phoenix:1.1.0'
+compile 'com.jakewharton:process-phoenix:1.1.1'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
