@@ -22,13 +22,6 @@ Intent nextIntent = //...
 ProcessPhoenix.triggerRebirth(context, nextIntent);
 ```
 
-To check if your application is inside the Phoenix process to skip initialization in `onCreate`:
-```java
-if (ProcessPhoenix.isPhoenixProcess(this)) {
-  return;
-}
-```
-
 
 
 Download
