@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.0.0 *(2017-03-11)*
+----------------------------
+
+ * New: Support for starting multiple intents at once.
+
+
 Version 1.1.1 *(2016-11-10)*
 ----------------------------
 
