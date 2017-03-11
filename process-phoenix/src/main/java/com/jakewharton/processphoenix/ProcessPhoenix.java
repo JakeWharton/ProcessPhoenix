@@ -26,6 +26,8 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Process;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Intent.ACTION_MAIN;
@@ -41,7 +43,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  * Trigger process recreation by calling {@link #triggerRebirth} with a {@link Context} instance.
  */
 public final class ProcessPhoenix extends Activity {
-  private static final String KEY_RESTART_INTENT = "phoenix_restart_intent";
+  private static final String KEY_RESTART_INTENTS = "phoenix_restart_intents";
 
   /**
    * Call to restart the application process using the {@linkplain Intent#CATEGORY_DEFAULT default}
@@ -54,14 +56,14 @@ public final class ProcessPhoenix extends Activity {
   }
 
   /**
-   * Call to restart the application process using the specified intent.
+   * Call to restart the application process using the specified intents.
    * <p>
    * Behavior of the current process after invoking this method is undefined.
    */
-  public static void triggerRebirth(Context context, Intent nextIntent) {
+  public static void triggerRebirth(Context context, Intent... nextIntents) {
     Intent intent = new Intent(context, ProcessPhoenix.class);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
-    intent.putExtra(KEY_RESTART_INTENT, nextIntent);
+    intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
     context.startActivity(intent);
     if (context instanceof Activity) {
       ((Activity) context).finish();
@@ -92,8 +94,8 @@ public final class ProcessPhoenix extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Intent intent = getIntent().getParcelableExtra(KEY_RESTART_INTENT);
-    startActivity(intent);
+    ArrayList<Intent> intents = getIntent().getParcelableArrayListExtra(KEY_RESTART_INTENTS);
+    startActivities(intents.toArray(new Intent[intents.size()]));
     finish();
     Runtime.getRuntime().exit(0); // Kill kill kill!
   }
