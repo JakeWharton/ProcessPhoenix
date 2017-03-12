@@ -17,21 +17,14 @@ package com.jakewharton.processphoenix;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Process;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.Intent.ACTION_MAIN;
-import static android.content.Intent.CATEGORY_DEFAULT;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -72,18 +65,11 @@ public final class ProcessPhoenix extends Activity {
   }
 
   private static Intent getRestartIntent(Context context) {
-    Intent defaultIntent = new Intent(ACTION_MAIN, null);
-    defaultIntent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
-    defaultIntent.addCategory(CATEGORY_DEFAULT);
-
     String packageName = context.getPackageName();
-    PackageManager packageManager = context.getPackageManager();
-    for (ResolveInfo resolveInfo : packageManager.queryIntentActivities(defaultIntent, 0)) {
-      ActivityInfo activityInfo = resolveInfo.activityInfo;
-      if (activityInfo.packageName.equals(packageName)) {
-        defaultIntent.setComponent(new ComponentName(packageName, activityInfo.name));
-        return defaultIntent;
-      }
+    Intent defaultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+    if (defaultIntent != null) {
+      defaultIntent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+      return defaultIntent;
     }
 
     throw new IllegalStateException("Unable to determine default activity for "
