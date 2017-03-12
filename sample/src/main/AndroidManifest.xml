@@ -10,5 +10,6 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
+    <activity android:name="com.jakewharton.processphoenix.ProcessPhoenix"/>
   </application>
 </manifest>

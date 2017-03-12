@@ -11,6 +11,12 @@ changing from staging to production).
 Usage
 -----
 
+Add the ProcessPhoenix activity to your app's `AndroidManifest.xml`:
+
+```xml
+<activity android:name="com.jakewharton.processphoenix.ProcessPhoenix"/>
+```
+
 Start the default activity in a new process:
 ```java
 ProcessPhoenix.triggerRebirth(context);
