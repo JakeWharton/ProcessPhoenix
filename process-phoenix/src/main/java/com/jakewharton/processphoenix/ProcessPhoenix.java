@@ -53,10 +53,16 @@ public final class ProcessPhoenix extends Activity {
    * <p>
    * Behavior of the current process after invoking this method is undefined.
    */
-  public static void triggerRebirth(Context context, Intent... nextIntents) {
+  public static void triggerRebirth(Context context, Intent... intents) {
+    if (intents.length < 1) {
+      throw new IllegalArgumentException("intents cannot be empty");
+    }
+    // create a new task for the first activity.
+    intents[0].addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+
     Intent intent = new Intent(context, ProcessPhoenix.class);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
-    intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
+    intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(intents)));
     context.startActivity(intent);
     if (context instanceof Activity) {
       ((Activity) context).finish();
@@ -68,7 +74,6 @@ public final class ProcessPhoenix extends Activity {
     String packageName = context.getPackageName();
     Intent defaultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
     if (defaultIntent != null) {
-      defaultIntent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
       return defaultIntent;
     }
 
