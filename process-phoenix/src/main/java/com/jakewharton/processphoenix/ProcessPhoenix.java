@@ -37,6 +37,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  */
 public final class ProcessPhoenix extends Activity {
   private static final String KEY_RESTART_INTENTS = "phoenix_restart_intents";
+  private static final String KEY_MAIN_PROCESS_PID = "phoenix_main_process_pid";
 
   /**
    * Call to restart the application process using the {@linkplain Intent#CATEGORY_DEFAULT default}
@@ -57,11 +58,8 @@ public final class ProcessPhoenix extends Activity {
     Intent intent = new Intent(context, ProcessPhoenix.class);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
     intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
+    intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid());
     context.startActivity(intent);
-    if (context instanceof Activity) {
-      ((Activity) context).finish();
-    }
-    Runtime.getRuntime().exit(0); // Kill kill kill!
   }
 
   private static Intent getRestartIntent(Context context) {
@@ -79,6 +77,8 @@ public final class ProcessPhoenix extends Activity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    Process.killProcess(getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
 
     ArrayList<Intent> intents = getIntent().getParcelableArrayListExtra(KEY_RESTART_INTENTS);
     startActivities(intents.toArray(new Intent[intents.size()]));
