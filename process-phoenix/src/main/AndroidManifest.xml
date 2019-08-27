@@ -6,7 +6,10 @@
     <activity
         android:name=".ProcessPhoenix"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:process=":phoenix"
-        />
+        android:process=":phoenix">
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
   </application>
 </manifest>
