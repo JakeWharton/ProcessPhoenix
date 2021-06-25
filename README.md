@@ -35,7 +35,7 @@ Download
 --------
 
 ```groovy
-implementation 'com.jakewharton:process-phoenix:2.0.0'
+implementation 'com.jakewharton:process-phoenix:2.1.0'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
