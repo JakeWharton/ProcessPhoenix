@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  compile project(':process-phoenix')
-  compile rootProject.ext.butterKnife
+  implementation project(':process-phoenix')
 }
 
 android {
