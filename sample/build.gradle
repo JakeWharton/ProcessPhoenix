@@ -6,7 +6,6 @@ dependencies {
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
     applicationId 'com.jakewharton.processphoenix.sample'
@@ -19,9 +18,5 @@ android {
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_7
     targetCompatibility JavaVersion.VERSION_1_7
-  }
-
-  dexOptions {
-    preDexLibraries = !rootProject.ext.ci
   }
 }
