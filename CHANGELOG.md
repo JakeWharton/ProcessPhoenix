@@ -1,10 +1,15 @@
 Change Log
 ==========
 
-Version 2.1.0 *(2021-06-25)*
+Version 2.1.1 *(2021-06-25)*
 ----------------------------
 
  * Fix: Ensure a new, clear task stack is used when user intent(s) are supplied.
+
+
+Version 2.1.0 *(2021-06-25)*
+----------------------------
+
  * Fix: Ensure default activity can be found on Android 8.0 and newer.
  * Fix: Reduce/eliminate launcher flashing when performing a process restart.
  * Fix: Useless `BuildConfig` class is no longer included.
