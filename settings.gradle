@@ -1,4 +1,3 @@
 rootProject.name = 'process-phoenix-root'
 
 include ':process-phoenix', ':sample'
-//include ':sample'
