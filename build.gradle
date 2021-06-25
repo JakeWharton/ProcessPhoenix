@@ -18,7 +18,4 @@ allprojects {
 ext {
   minSdkVersion = 11
   compileSdkVersion = 30
-  buildToolsVersion = '30.0.3'
-
-  ci = 'true' == System.getenv('CI')
 }
