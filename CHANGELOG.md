@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.1.2 *(2021-08-13)*
+----------------------------
+
+ * Fix: Add `exported=false` to activity for Android 12 targetSdk compatibility.
+
+
 Version 2.1.1 *(2021-06-25)*
 ----------------------------
 
