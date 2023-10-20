@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.pm.PackageManager.FEATURE_LEANBACK;
 
 /**
  * Process Phoenix facilitates restarting your application process. This should only be used for
@@ -70,7 +73,16 @@ public final class ProcessPhoenix extends Activity {
 
   private static Intent getRestartIntent(Context context) {
     String packageName = context.getPackageName();
-    Intent defaultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+
+    Intent defaultIntent = null;
+    PackageManager packageManager = context.getPackageManager();
+    if (Build.VERSION.SDK_INT >= 21 && packageManager.hasSystemFeature(FEATURE_LEANBACK)) {
+      // Use leanback intent if available, for Android TV apps.
+      defaultIntent = packageManager.getLeanbackLaunchIntentForPackage(packageName);
+    }
+    if (defaultIntent == null) {
+      defaultIntent = packageManager.getLaunchIntentForPackage(packageName);
+    }
     if (defaultIntent != null) {
       return defaultIntent;
     }
