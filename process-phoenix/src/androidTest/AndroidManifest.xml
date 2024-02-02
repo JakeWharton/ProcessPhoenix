@@ -1,0 +1,15 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jakewharton.processphoenix"
+    >
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+  <!-- TODO http://b.android.com/179651 -->
+  <uses-sdk
+      android:minSdkVersion="18"
+      tools:overrideLibrary="android_libs.ub_uiautomator"
+      />
+  <application/>
+</manifest>

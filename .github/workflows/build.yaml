@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,14 @@ jobs:
           distribution: 'zulu'
           java-version: 8
 
-      - run: ./gradlew build
+      - run: ./gradlew build assembleAndroidTest
+
+      - name: Run Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 24
+          # The tests require the sample to be installed.
+          script: ./gradlew installDebug connectedCheck
 
       - run: ./gradlew uploadArchives
         if: ${{ github.ref == 'refs/heads/trunk' && github.repository == 'JakeWharton/ProcessPhoenix' }}
