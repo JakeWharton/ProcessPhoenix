@@ -1,13 +1,11 @@
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jakewharton.processphoenix"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
   <application>
     <activity
-        android:name=".ProcessPhoenix"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:process=":phoenix"
-        android:exported="false"
-        />
+      android:name=".ProcessPhoenix"
+      android:exported="false"
+      android:process=":phoenix"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar"
+      />
   </application>
 </manifest>
