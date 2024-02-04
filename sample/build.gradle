@@ -4,7 +4,6 @@ android {
   namespace 'com.jakewharton.processphoenix.sample'
 
   defaultConfig {
-    applicationId 'com.jakewharton.processphoenix.sample'
     minSdk rootProject.ext.minSdkVersion
     targetSdk rootProject.ext.compileSdkVersion
     compileSdk rootProject.ext.compileSdkVersion
