@@ -1,21 +1,32 @@
+import com.android.build.gradle.BaseExtension
+
 buildscript {
   repositories {
-    google()
     mavenCentral()
+    google()
+    gradlePluginPortal()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.2.1'
+    classpath 'com.android.tools.build:gradle:8.2.2'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.27.0'
   }
 }
 
 allprojects {
   repositories {
-    google()
     mavenCentral()
+    google()
+  }
+
+  tasks.withType(BaseExtension).configureEach  {
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_1_7
+      targetCompatibility JavaVersion.VERSION_1_7
+    }
   }
 }
 
 ext {
   minSdkVersion = 11
-  compileSdkVersion = 30
+  compileSdkVersion = 34
 }

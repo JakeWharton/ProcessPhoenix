@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jakewharton.processphoenix.sample"
+  xmlns:tools="http://schemas.android.com/tools"
+  >
+
+  <application
+    android:label="Process Phoenix"
+    tools:ignore="MissingApplicationIcon"
     >
-  <application android:label="Process Phoenix">
-    <activity android:name=".MainActivity">
+    <activity
+      android:name=".MainActivity"
+      android:exported="true"
+      >
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
-        <category android:name="android.intent.category.DEFAULT"/>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
   </application>
