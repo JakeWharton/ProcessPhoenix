@@ -23,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
+import android.os.StrictMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -97,8 +98,20 @@ public final class ProcessPhoenix extends Activity {
 
     Process.killProcess(getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
 
-    ArrayList<Intent> intents = getIntent().getParcelableArrayListExtra(KEY_RESTART_INTENTS);
-    startActivities(intents.toArray(new Intent[intents.size()]));
+    Intent[] intents = getIntent()
+        .<Intent>getParcelableArrayListExtra(KEY_RESTART_INTENTS)
+        .toArray(new Intent[0]);
+
+    if (Build.VERSION.SDK_INT > 31) {
+      // Disable strict mode complaining about out-of-process intents. Normally you save and restore
+      // the original policy, but this process will die almost immediately after the offending call.
+      StrictMode.setVmPolicy(
+          new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
+              .permitUnsafeIntentLaunch()
+              .build());
+    }
+
+    startActivities(intents);
     finish();
     Runtime.getRuntime().exit(0); // Kill kill kill!
   }
