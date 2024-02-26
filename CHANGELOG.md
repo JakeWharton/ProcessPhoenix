@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 2.2.0 *(2024-02-26)*
+----------------------------
+
+ * New: Support for launching the default Leanback intent on Android TV.
+ * Strict mode's unsafe intent policy is now automatically disabled before launching back into the main application.
+
+
 Version 2.1.2 *(2021-08-13)*
 ----------------------------
 
