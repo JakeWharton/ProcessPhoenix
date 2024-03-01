@@ -39,9 +39,9 @@ import static android.content.pm.PackageManager.FEATURE_LEANBACK;
  * <p>
  * Trigger process recreation by calling {@link #triggerRebirth} with a {@link Context} instance.
  */
-public final class ProcessPhoenix extends Activity {
-  private static final String KEY_RESTART_INTENTS = "phoenix_restart_intents";
-  private static final String KEY_MAIN_PROCESS_PID = "phoenix_main_process_pid";
+public final class ProcessPhoenix {
+  static final String KEY_RESTART_INTENTS = "phoenix_restart_intents";
+  static final String KEY_MAIN_PROCESS_PID = "phoenix_main_process_pid";
 
   /**
    * Call to restart the application process using the {@linkplain Intent#CATEGORY_DEFAULT default}
@@ -65,7 +65,7 @@ public final class ProcessPhoenix extends Activity {
     // create a new task for the first activity.
     nextIntents[0].addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
 
-    Intent intent = new Intent(context, ProcessPhoenix.class);
+    Intent intent = new Intent(context, PhoenixActivity.class);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
     intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
     intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid());
@@ -91,29 +91,6 @@ public final class ProcessPhoenix extends Activity {
     throw new IllegalStateException("Unable to determine default activity for "
         + packageName
         + ". Does an activity specify the DEFAULT category in its intent filter?");
-  }
-
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    Process.killProcess(getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
-
-    Intent[] intents = getIntent()
-        .<Intent>getParcelableArrayListExtra(KEY_RESTART_INTENTS)
-        .toArray(new Intent[0]);
-
-    if (Build.VERSION.SDK_INT > 31) {
-      // Disable strict mode complaining about out-of-process intents. Normally you save and restore
-      // the original policy, but this process will die almost immediately after the offending call.
-      StrictMode.setVmPolicy(
-          new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
-              .permitUnsafeIntentLaunch()
-              .build());
-    }
-
-    startActivities(intents);
-    finish();
-    Runtime.getRuntime().exit(0); // Kill kill kill!
   }
 
   /**

@@ -2,7 +2,7 @@
 
   <application>
     <activity
-      android:name=".ProcessPhoenix"
+      android:name=".PhoenixActivity"
       android:exported="false"
       android:process=":phoenix"
       android:theme="@android:style/Theme.Translucent.NoTitleBar"
