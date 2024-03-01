@@ -7,5 +7,11 @@
       android:process=":phoenix"
       android:theme="@android:style/Theme.Translucent.NoTitleBar"
       />
+
+    <service
+        android:name=".PhoenixService"
+        android:exported="false"
+        android:process=":phoenix"
+        />
   </application>
 </manifest>

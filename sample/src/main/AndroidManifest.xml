@@ -3,6 +3,9 @@
   xmlns:tools="http://schemas.android.com/tools"
   >
 
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
   <application
     android:label="Process Phoenix"
     tools:ignore="MissingApplicationIcon"
@@ -18,5 +21,11 @@
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
+
+
+    <service
+      android:name=".RestartService"
+      android:exported="true"
+      android:foregroundServiceType="shortService" />
   </application>
 </manifest>

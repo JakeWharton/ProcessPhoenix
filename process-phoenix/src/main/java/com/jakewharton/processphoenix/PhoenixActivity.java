@@ -8,7 +8,9 @@ import android.os.Process;
 import android.os.StrictMode;
 
 public class PhoenixActivity extends Activity {
-   @Override protected void onCreate(Bundle savedInstanceState) {
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     Process.killProcess(getIntent().getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1)); // Kill original main process

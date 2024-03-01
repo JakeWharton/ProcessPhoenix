@@ -17,6 +17,7 @@ package com.jakewharton.processphoenix;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ import static android.content.pm.PackageManager.FEATURE_LEANBACK;
  * Trigger process recreation by calling {@link #triggerRebirth} with a {@link Context} instance.
  */
 public final class ProcessPhoenix {
+  static final String KEY_RESTART_INTENT = "phoenix_restart_intent";
   static final String KEY_RESTART_INTENTS = "phoenix_restart_intents";
   static final String KEY_MAIN_PROCESS_PID = "phoenix_main_process_pid";
 
@@ -54,11 +56,56 @@ public final class ProcessPhoenix {
   }
 
   /**
+   * Call to restart the application process using the provided targetClass as an intent.
+   * <p>
+   * Behavior of the current process after invoking this method is undefined.
+   */
+  public static void triggerRebirth(Context context, Class<?> targetClass) {
+    Intent nextIntent = new Intent(context, targetClass);
+
+    if (Service.class.isAssignableFrom(targetClass)) {
+      triggerServiceRebirth(context, nextIntent);
+      return;
+    }
+
+    // Default to Activity rebirth
+    triggerActivityRebirth(context, nextIntent);
+  }
+
+  /**
    * Call to restart the application process using the specified intents.
+   * Please note: If the intents resolves to a Service only the first intent is used.
    * <p>
    * Behavior of the current process after invoking this method is undefined.
    */
   public static void triggerRebirth(Context context, Intent... nextIntents) {
+    if (nextIntents.length < 1) {
+      throw new IllegalArgumentException("intents cannot be empty");
+    }
+
+    Intent firstIntent = nextIntents[0];
+    PackageManager pm = context.getPackageManager();
+
+    if (pm.resolveActivity(firstIntent, 0) != null) {
+      triggerActivityRebirth(context, nextIntents);
+      return;
+    }
+
+    if (pm.resolveService(firstIntent, 0) != null) {
+      triggerServiceRebirth(context, firstIntent);
+      return;
+    }
+
+    // If the first intent does not resolve to an Activity or Service, default to Activity rebirth
+    triggerActivityRebirth(context, nextIntents);
+  }
+
+  /**
+   * Call to restart the application process using the specified intents.
+   * <p>
+   * Behavior of the current process after invoking this method is undefined.
+   */
+  public static void triggerActivityRebirth(Context context, Intent... nextIntents) {
     if (nextIntents.length < 1) {
       throw new IllegalArgumentException("intents cannot be empty");
     }
@@ -70,6 +117,19 @@ public final class ProcessPhoenix {
     intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
     intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid());
     context.startActivity(intent);
+  }
+
+
+  /**
+   * Call to restart the application process using the specified Service intent.
+   * <p>
+   * Behavior of the current process after invoking this method is undefined.
+   */
+  public static void triggerServiceRebirth(Context context, Intent nextIntent) {
+    Intent intent = new Intent(context, PhoenixService.class);
+    intent.putExtra(KEY_RESTART_INTENT, nextIntent);
+    intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid());
+    context.startService(intent);
   }
 
   private static Intent getRestartIntent(Context context) {
