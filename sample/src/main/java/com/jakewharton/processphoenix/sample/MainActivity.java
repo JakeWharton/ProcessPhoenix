@@ -11,7 +11,8 @@ import com.jakewharton.processphoenix.ProcessPhoenix;
 public final class MainActivity extends Activity {
   private static final String EXTRA_TEXT = "text";
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_main);
@@ -24,20 +25,22 @@ public final class MainActivity extends Activity {
     processIdView.setText("Process ID: " + Process.myPid());
     extraTextView.setText("Extra Text: " + getIntent().getStringExtra(EXTRA_TEXT));
 
-    restartButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ProcessPhoenix.triggerRebirth(MainActivity.this);
-      }
-    });
+    restartButton.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            ProcessPhoenix.triggerRebirth(MainActivity.this);
+          }
+        });
 
-    restartWithIntentButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent nextIntent = new Intent(MainActivity.this, MainActivity.class);
-        nextIntent.putExtra(EXTRA_TEXT, "Hello!");
-        ProcessPhoenix.triggerRebirth(MainActivity.this, nextIntent);
-      }
-    });
+    restartWithIntentButton.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent nextIntent = new Intent(MainActivity.this, MainActivity.class);
+            nextIntent.putExtra(EXTRA_TEXT, "Hello!");
+            ProcessPhoenix.triggerRebirth(MainActivity.this, nextIntent);
+          }
+        });
   }
 }
