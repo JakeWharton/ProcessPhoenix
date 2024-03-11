@@ -7,12 +7,13 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.3.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.27.0'
+    classpath libs.androidPlugin
+    classpath libs.gradleMavenPublishPlugin
+    classpath libs.spotlessPlugin
   }
 }
 
-allprojects {
+subprojects {
   repositories {
     mavenCentral()
     google()
@@ -22,6 +23,16 @@ allprojects {
     compileOptions {
       sourceCompatibility JavaVersion.VERSION_1_7
       targetCompatibility JavaVersion.VERSION_1_7
+    }
+  }
+
+  apply plugin: 'com.diffplug.spotless'
+  spotless {
+    java {
+      googleJavaFormat(libs.googleJavaFormat.get().version)
+          .formatJavadoc(false)
+      removeUnusedImports()
+      target 'src/**/*.java'
     }
   }
 }

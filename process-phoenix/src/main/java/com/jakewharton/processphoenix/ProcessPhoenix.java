@@ -15,6 +15,10 @@
  */
 package com.jakewharton.processphoenix;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.pm.PackageManager.FEATURE_LEANBACK;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -27,10 +31,6 @@ import android.os.StrictMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.pm.PackageManager.FEATURE_LEANBACK;
 
 /**
  * Process Phoenix facilitates restarting your application process. This should only be used for
@@ -67,7 +67,8 @@ public final class ProcessPhoenix extends Activity {
 
     Intent intent = new Intent(context, ProcessPhoenix.class);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK); // In case we are called with non-Activity context.
-    intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
+    intent.putParcelableArrayListExtra(
+        KEY_RESTART_INTENTS, new ArrayList<>(Arrays.asList(nextIntents)));
     intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid());
     context.startActivity(intent);
   }
@@ -88,19 +89,21 @@ public final class ProcessPhoenix extends Activity {
       return defaultIntent;
     }
 
-    throw new IllegalStateException("Unable to determine default activity for "
-        + packageName
-        + ". Does an activity specify the DEFAULT category in its intent filter?");
+    throw new IllegalStateException(
+        "Unable to determine default activity for "
+            + packageName
+            + ". Does an activity specify the DEFAULT category in its intent filter?");
   }
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Process.killProcess(getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
+    Process.killProcess(
+        getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
 
-    Intent[] intents = getIntent()
-        .<Intent>getParcelableArrayListExtra(KEY_RESTART_INTENTS)
-        .toArray(new Intent[0]);
+    Intent[] intents =
+        getIntent().<Intent>getParcelableArrayListExtra(KEY_RESTART_INTENTS).toArray(new Intent[0]);
 
     if (Build.VERSION.SDK_INT > 31) {
       // Disable strict mode complaining about out-of-process intents. Normally you save and restore
