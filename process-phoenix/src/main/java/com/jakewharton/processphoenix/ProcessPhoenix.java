@@ -22,9 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Process;
-import android.os.StrictMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,56 +55,21 @@ public final class ProcessPhoenix {
   }
 
   /**
-   * Call to restart the application process using the provided targetClass as an intent.
+   * Call to restart the application process using the provided Activity Class.
    * <p>
    * Behavior of the current process after invoking this method is undefined.
    */
-  public static void triggerRebirth(Context context, Class<?> targetClass) {
+  public static void triggerRebirth(Context context, Class<? extends Activity> targetClass) {
     Intent nextIntent = new Intent(context, targetClass);
-
-    if (Service.class.isAssignableFrom(targetClass)) {
-      triggerServiceRebirth(context, nextIntent);
-      return;
-    }
-
-    // Default to Activity rebirth
-    triggerActivityRebirth(context, nextIntent);
+    triggerRebirth(context, nextIntent);
   }
 
   /**
    * Call to restart the application process using the specified intents.
-   * Please note: If the intents resolves to a Service only the first intent is used.
    * <p>
    * Behavior of the current process after invoking this method is undefined.
    */
   public static void triggerRebirth(Context context, Intent... nextIntents) {
-    if (nextIntents.length < 1) {
-      throw new IllegalArgumentException("intents cannot be empty");
-    }
-
-    Intent firstIntent = nextIntents[0];
-    PackageManager pm = context.getPackageManager();
-
-    if (pm.resolveActivity(firstIntent, 0) != null) {
-      triggerActivityRebirth(context, nextIntents);
-      return;
-    }
-
-    if (pm.resolveService(firstIntent, 0) != null) {
-      triggerServiceRebirth(context, firstIntent);
-      return;
-    }
-
-    // If the first intent does not resolve to an Activity or Service, default to Activity rebirth
-    triggerActivityRebirth(context, nextIntents);
-  }
-
-  /**
-   * Call to restart the application process using the specified intents.
-   * <p>
-   * Behavior of the current process after invoking this method is undefined.
-   */
-  public static void triggerActivityRebirth(Context context, Intent... nextIntents) {
     if (nextIntents.length < 1) {
       throw new IllegalArgumentException("intents cannot be empty");
     }
@@ -119,6 +83,15 @@ public final class ProcessPhoenix {
     context.startActivity(intent);
   }
 
+  /**
+   * Call to restart the application process using the provided Service Class.
+   * <p>
+   * Behavior of the current process after invoking this method is undefined.
+   */
+  public static void triggerServiceRebirth(Context context, Class<? extends Service> targetClass) {
+    Intent nextIntent = new Intent(context, targetClass);
+    triggerServiceRebirth(context, nextIntent);
+  }
 
   /**
    * Call to restart the application process using the specified Service intent.
