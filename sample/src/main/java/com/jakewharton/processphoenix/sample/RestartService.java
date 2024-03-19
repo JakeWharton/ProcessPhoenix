@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  * The observed delay periods are: 1s, 4s, 16s, 64s, 256s, 1024s. (on an Android 11 device)
  * Which seems to follow this pattern: 4^x, with x being the restart attempt minus 1.
  */
-public class RestartService extends IntentService {
+public final class RestartService extends IntentService {
 
     public RestartService() {
         super("RestartService");
@@ -42,11 +42,7 @@ public class RestartService extends IntentService {
         // Trigger rebirth from a separate thread, such that the onStartCommand can finish properly
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                // Ignore
-            }
+            SystemClock.sleep(1000)
             ProcessPhoenix.triggerRebirth(RestartService.this, RestartService.class);
 //            ProcessPhoenix.triggerRebirth(RestartService.this, new Intent(RestartService.this, RestartService.class));
         });

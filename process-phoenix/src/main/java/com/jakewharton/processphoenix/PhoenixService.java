@@ -13,7 +13,7 @@ import android.os.StrictMode;
  * The observed delay periods are: 1s, 4s, 16s, 64s, 256s, 1024s. (on an Android 11 device)
  * Which seems to follow this pattern: 4^x, with x being the restart attempt minus 1.
  */
-public class PhoenixService extends IntentService {
+public final class PhoenixService extends IntentService {
 
   public PhoenixService() {
     super("PhoenixService");

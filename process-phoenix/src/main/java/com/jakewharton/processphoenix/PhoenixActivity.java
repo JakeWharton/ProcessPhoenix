@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.os.StrictMode;
 
-public class PhoenixActivity extends Activity {
+public final class PhoenixActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

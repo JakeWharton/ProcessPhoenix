@@ -26,6 +26,7 @@
     <service
       android:name=".RestartService"
       android:exported="true"
-      android:foregroundServiceType="shortService" />
+      android:foregroundServiceType="shortService"
+      />
   </application>
 </manifest>

@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
-public class NotificationBuilder {
+public final class NotificationBuilder {
 
     /**
      * Create a Notification, required to support Service restarting on Android 8 and newer
