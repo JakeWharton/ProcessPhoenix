@@ -13,7 +13,9 @@ public final class PhoenixActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Process.killProcess(getIntent().getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
+    // Kill original main process
+    Process.killProcess(
+        getIntent().getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1));
 
     Intent[] intents = getIntent()
         .<Intent>getParcelableArrayListExtra(ProcessPhoenix.KEY_RESTART_INTENTS)
