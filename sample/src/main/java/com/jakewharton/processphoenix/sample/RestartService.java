@@ -8,7 +8,6 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
 import com.jakewharton.processphoenix.ProcessPhoenix;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,29 +22,28 @@ import java.util.concurrent.Executors;
  */
 public final class RestartService extends IntentService {
 
-    public RestartService() {
-        super("RestartService");
+  public RestartService() {
+    super("RestartService");
+  }
+
+  @SuppressLint("ForegroundServiceType")
+  @Override
+  protected void onHandleIntent(Intent intent) {
+    // Log something to console to easily track successful restarts
+    Log.d("ProcessPhoenix", "--- RestartService started with PID: " + Process.myPid() + " ---");
+
+    if (Build.VERSION.SDK_INT >= 26) {
+      startForeground(1337, NotificationBuilder.createNotification(RestartService.this));
     }
 
-    @SuppressLint("ForegroundServiceType")
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        // Log something to console to easily track successful restarts
-        Log.d(
-                "ProcessPhoenix",
-                "--- RestartService started with PID: " + Process.myPid() + " ---"
-        );
-
-        if (Build.VERSION.SDK_INT >= 26) {
-            startForeground(1337, NotificationBuilder.createNotification(RestartService.this));
-        }
-
-        // Trigger rebirth from a separate thread, such that the onStartCommand can finish properly
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            SystemClock.sleep(1000);
-            ProcessPhoenix.triggerServiceRebirth(RestartService.this, RestartService.class);
-//            ProcessPhoenix.triggerServiceRebirth(RestartService.this, new Intent(RestartService.this, RestartService.class));
+    // Trigger rebirth from a separate thread, such that the onStartCommand can finish properly
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    executorService.execute(
+        () -> {
+          SystemClock.sleep(1000);
+          ProcessPhoenix.triggerServiceRebirth(RestartService.this, RestartService.class);
+          //            ProcessPhoenix.triggerServiceRebirth(RestartService.this, new
+          // Intent(RestartService.this, RestartService.class));
         });
-    }
+  }
 }

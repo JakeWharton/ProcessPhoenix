@@ -14,12 +14,12 @@ public final class PhoenixActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     // Kill original main process
-    Process.killProcess(
-        getIntent().getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1));
+    Process.killProcess(getIntent().getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1));
 
-    Intent[] intents = getIntent()
-        .<Intent>getParcelableArrayListExtra(ProcessPhoenix.KEY_RESTART_INTENTS)
-        .toArray(new Intent[0]);
+    Intent[] intents =
+        getIntent()
+            .<Intent>getParcelableArrayListExtra(ProcessPhoenix.KEY_RESTART_INTENTS)
+            .toArray(new Intent[0]);
 
     if (Build.VERSION.SDK_INT > 31) {
       // Disable strict mode complaining about out-of-process intents. Normally you save and restore

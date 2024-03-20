@@ -25,7 +25,8 @@ public final class PhoenixService extends IntentService {
       return;
     }
 
-    Process.killProcess(intent.getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
+    Process.killProcess(
+        intent.getIntExtra(ProcessPhoenix.KEY_MAIN_PROCESS_PID, -1)); // Kill original main process
 
     Intent nextIntent;
     if (Build.VERSION.SDK_INT >= 33) {
