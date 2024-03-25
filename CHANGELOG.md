@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 3.0.0 *(2024-03-25)*
+----------------------------
+
+ * New: Support restarting `Service`s with `triggerServiceRebirth`.
+ * New: Restart an `Activity` with only a `Class` reference.
+ * Change: `ProcessPheonix` class no longer extends `Activity`. In practice no one should have been relying on this anyway.
+
+
 Version 2.2.0 *(2024-02-26)*
 ----------------------------
 
