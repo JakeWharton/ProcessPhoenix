@@ -62,4 +62,4 @@ License
 
 
 
- [snap]: https://oss.sonatype.org/content/repositories/snapshots/
+ [snap]: https://central.sonatype.com/repository/maven-snapshots/
