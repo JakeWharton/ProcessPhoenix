@@ -9,3 +9,8 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
   }
 }
+
+mavenPublishing.configureBasedOnAppliedPlugins(
+    /* sourceJar = */ true,
+    /* javadocJar = */ false,
+)
