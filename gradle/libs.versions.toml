@@ -1,5 +1,5 @@
 [libraries]
-androidPlugin = "com.android.tools.build:gradle:8.13.1"
+androidPlugin = "com.android.tools.build:gradle:8.13.2"
 gradleMavenPublishPlugin = "com.vanniktech:gradle-maven-publish-plugin:0.35.0"
 spotlessPlugin = "com.diffplug.spotless:spotless-plugin-gradle:8.1.0"
 
