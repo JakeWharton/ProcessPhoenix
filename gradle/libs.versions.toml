@@ -3,4 +3,4 @@ androidPlugin = "com.android.tools.build:gradle:9.0.0"
 gradleMavenPublishPlugin = "com.vanniktech:gradle-maven-publish-plugin:0.36.0"
 spotlessPlugin = "com.diffplug.spotless:spotless-plugin-gradle:8.2.1"
 
-googleJavaFormat = "com.google.googlejavaformat:google-java-format:1.33.0"
+googleJavaFormat = "com.google.googlejavaformat:google-java-format:1.34.1"
