@@ -38,12 +38,11 @@ public final class RestartService extends IntentService {
 
     // Trigger rebirth from a separate thread, such that the onStartCommand can finish properly
     ExecutorService executorService = Executors.newSingleThreadExecutor();
-    executorService.execute(
-        () -> {
-          SystemClock.sleep(1000);
-          ProcessPhoenix.triggerServiceRebirth(RestartService.this, RestartService.class);
-          //            ProcessPhoenix.triggerServiceRebirth(RestartService.this, new
-          // Intent(RestartService.this, RestartService.class));
-        });
+    executorService.execute(() -> {
+      SystemClock.sleep(1000);
+      ProcessPhoenix.triggerServiceRebirth(RestartService.this, RestartService.class);
+      //            ProcessPhoenix.triggerServiceRebirth(RestartService.this, new
+      // Intent(RestartService.this, RestartService.class));
+    });
   }
 }
